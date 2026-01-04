@@ -8,18 +8,17 @@ from user.serializers import UserSerializer
 
 
 class CreateTokenView(ObtainAuthToken):
-   renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 
 class CreateUserView(generics.CreateAPIView):
-   serializer_class = UserSerializer
+    serializer_class = UserSerializer
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
-   serializer_class = UserSerializer
-   authentication_classes = (TokenAuthentication,)
-   permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
-   def get_object(self):
-       return self.request.user
-
+    def get_object(self):
+        return self.request.user
