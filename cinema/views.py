@@ -28,7 +28,7 @@ from cinema.serializers import (
 from user.permissions import IsAdminOrIfAuthenticatedReadOnly
 
 
-class ListCreateAunthenticationPermissionMixin(
+class ListCreateAuthenticationPermissionMixin(
     ListModelMixin,
     CreateModelMixin,
     GenericViewSet
@@ -37,23 +37,23 @@ class ListCreateAunthenticationPermissionMixin(
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
-class GenreViewSet(ListCreateAunthenticationPermissionMixin):
+class GenreViewSet(ListCreateAuthenticationPermissionMixin):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
 
-class ActorViewSet(ListCreateAunthenticationPermissionMixin):
+class ActorViewSet(ListCreateAuthenticationPermissionMixin):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
 
-class CinemaHallViewSet(ListCreateAunthenticationPermissionMixin):
+class CinemaHallViewSet(ListCreateAuthenticationPermissionMixin):
     queryset = CinemaHall.objects.all()
     serializer_class = CinemaHallSerializer
 
 
 class MovieViewSet(
-    ListCreateAunthenticationPermissionMixin,
+    ListCreateAuthenticationPermissionMixin,
     RetrieveModelMixin
 ):
     queryset = Movie.objects.prefetch_related("genres", "actors")
@@ -139,7 +139,7 @@ class OrderPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class OrderViewSet(ListCreateAunthenticationPermissionMixin):
+class OrderViewSet(ListCreateAuthenticationPermissionMixin):
     queryset = Order.objects.prefetch_related(
         "tickets__movie_session__movie", "tickets__movie_session__cinema_hall"
     )
